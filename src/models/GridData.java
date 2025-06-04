@@ -9,7 +9,7 @@ public class GridData {
     private int height;
 
 
-    public GridData(int row, int col, int x, int width, int height, int y) {
+    public GridData(int row, int col, int x, int y, int width, int height) {
         this.row = row;
         this.col = col;
         this.x = x;
