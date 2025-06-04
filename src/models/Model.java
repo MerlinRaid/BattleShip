@@ -3,8 +3,9 @@ package models;
 import java.util.ArrayList;
 
 public class Model {
-    private int bordSize = 10; //Vaikimisi mängulaua suurus
+    private int boardSize = 10; //Vaikimisi mängulaua suurus
     private ArrayList<GridData> gridData;
+    private Game game; //Laevade info mängulaual
 
     public Model() {
         gridData = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Model {
 
     /**
      * Tagstab mängulaua reanumbri saadud id põhjal (chechGridIndex)
-     * @param id mängulaua lahti id
+     * @param id mängulaua lahtri id
      * @return mängulaua rea number
      */
     public int getRowById(int id){
@@ -56,20 +57,30 @@ public class Model {
         return -1; //Viga
     }
 
+    public void setupNewGame() {
+        game = new Game(boardSize);
+    }
+
     //GETTERS
 
     public int getBoardSize() {
-        return bordSize;
+        return boardSize;
     }
 
     public ArrayList<GridData> getGridData() {
         return gridData;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
+
+
     //SETTERS
 
     public void setBoardSize(int bordSize) {
-        this.bordSize = bordSize;
+        this.boardSize = bordSize;
     }
 
     public void setGridData(ArrayList<GridData> gridData) {

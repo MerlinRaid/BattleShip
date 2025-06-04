@@ -2,9 +2,12 @@ package controllers;
 
 import controllers.listener.MyComboBoxListener;
 import controllers.listener.MyNewGameListener;
+import models.GameTimer;
 import models.Model;
 import views.View;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,14 +15,25 @@ import java.awt.event.MouseMotionListener;
 public class Controller implements MouseListener, MouseMotionListener {
     private Model model;
     private View view;
+    private GameTimer gameTimer;
+    private Timer guiTimer;
+
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+        gameTimer = new GameTimer(); //Loome aja objekti, aga ei käivita
+
+        guiTimer = new Timer(1000, event ->{
+           if(gameTimer.isRunning()) {
+               this.view.getLblTime().setText(gameTimer.formatGameTime());
+           }
+        });
+        guiTimer.start(); //Käivitab GUI taimeri, aga mänguaeg (GameTimeri) mitte!
 
         //Listenerid
         view.registerComboBox(new MyComboBoxListener(model, view) );
-        view.registerNewGameButton(new MyNewGameListener(model, view)); //TODO GameTimer
+        view.registerNewGameButton(new MyNewGameListener(model, view, gameTimer)); //TODO GameTimer
     }
 
     @Override
