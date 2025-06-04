@@ -7,11 +7,11 @@ import java.awt.*;
 
 public class InfoBoard extends JPanel {
 
-    private  JPanel pnlComponent = new JPanel(new GridBagLayout());
+    private JPanel pnlComponent = new JPanel(new GridBagLayout());
     private GridBagConstraints gbc = new GridBagConstraints();
 
     //Kaks kirjastiili
-    private  Font fontBold = new Font("Verdana", Font.BOLD, 14);
+    private Font fontBold = new Font("Verdana", Font.BOLD, 14);
     private Font fontNormal = new Font("Verdana", Font.PLAIN, 14);
 
     //Võimalikud mängulau suurused
@@ -31,9 +31,14 @@ public class InfoBoard extends JPanel {
     private JButton btnScoreBoard;
 
     //TODO Edetabeliga seotud asjad
+    private JRadioButton rdoFile; //Info loetakse failist
+    private JRadioButton rdoDb; //Info loetakse andemaasist
+    private ButtonGroup btnGroup = new ButtonGroup(); // Mõlemad rdo nupud on siin
+    private JComboBox chkWhere; //Eraldi aknas linnuke
 
     public InfoBoard() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        //setLayout(new FlowLayout(FlowLayout.LEFT)); //Algne layout
+        setLayout(new BorderLayout()); //Uus layout
         setPreferredSize(new Dimension(400, 188));
         setBackground(new Color(0, 255, 190));
 
@@ -52,9 +57,27 @@ public class InfoBoard extends JPanel {
         setupLine6();
         setupComboBox();
         setupButtons();
+        setupRadioButtons();
 
-        add(pnlComponent);
+
+        //Tühja osa täitmine, mis on veniv
+        gbc.gridx = 0;
+        gbc.gridy = 12;
+        gbc.gridwidth = 2; //Kasutusel on kaks veergu
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        JPanel flowPanel = new JPanel();
+        flowPanel.setOpaque(false); //Nähtamatu ainult venitab
+        pnlComponent.add(flowPanel, gbc);
+
+
+        add(pnlComponent, BorderLayout.CENTER);
+
+
     }
+
+
 
     private void setupLine1() {
         //Esimese reag esimene veerg (rasvane lahter)
@@ -192,6 +215,43 @@ public class InfoBoard extends JPanel {
 
     }
 
+    private void setupRadioButtons() {
+        JLabel label = new JLabel("Edetabeli sisu");
+        label.setFont(fontBold);
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        pnlComponent.add(label, gbc);
+
+        rdoFile = new JRadioButton("Fail");
+        rdoFile.setFont(fontNormal);
+        rdoFile.setBackground(new Color(230, 230, 170));
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        pnlComponent.add(rdoFile, gbc);
+
+        rdoDb = new JRadioButton("Andmebaas");
+        rdoDb.setFont(fontNormal);
+        rdoDb.setBackground(new Color(230, 230, 170));
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        pnlComponent.add(rdoDb, gbc);
+
+        btnGroup.add(rdoFile);
+        btnGroup.add(rdoDb);
+        rdoFile.setSelected(true);
+
+        JCheckBox chkSeparateWindow = new JCheckBox("Eraldi aknas");
+        chkSeparateWindow.setFont(fontNormal);
+        chkSeparateWindow.setBackground(new Color(230, 230, 170));
+        chkSeparateWindow.setSelected(true);
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+        pnlComponent.add(chkSeparateWindow, gbc);
+    }
 
 
-}
+    public JPanel getPnlComponent() {
+        return pnlComponent;
+    }
+
+} // LÕPP
