@@ -254,4 +254,51 @@ public class InfoBoard extends JPanel {
         return pnlComponent;
     }
 
+    public JLabel getLblMouseXY() {
+        return lblMouseXY;
+    }
+
+    public JLabel getLblID() {
+        return lblID;
+    }
+
+    public JLabel getLblRowCol() {
+        return lblRowCol;
+    }
+
+    public JLabel getLblTime() {
+        return lblTime;
+    }
+
+    public JLabel getLblShip() {
+        return lblShip;
+    }
+
+    public JLabel getLblGameBoard() {
+        return lblGameBoard;
+    }
+
+    public JComboBox<String> getCmbSize() {
+        return cmbSize;
+    }
+
+    public JButton getBtnNewGame() {
+        return btnNewGame;
+    }
+
+    public JButton getBtnScoreBoard() {
+        return btnScoreBoard;
+    }
+
+    public JRadioButton getRdoFile() {
+        return rdoFile;
+    }
+
+    public JRadioButton getRdoDb() {
+        return rdoDb;
+    }
+
+    public JComboBox getChkWhere() {
+        return chkWhere;
+    }
 } // LÕPP

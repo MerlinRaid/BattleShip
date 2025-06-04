@@ -27,11 +27,11 @@ public class View extends JFrame {
         add(container);
 
         //Test Frame ja Panel Layout Managerid
-        System.out.println("JFrame"       + this.getLayout());
-        System.out.println("container "   + container.getLayout());
-        System.out.println("GameBoard "   + gameBoard.getLayout());
-        System.out.println("infoBoard "   + infoBoard.getLayout());
-        System.out.println("pnlComponent" + infoBoard.getPnlComponent().getLayout());
+//        System.out.println("JFrame"       + this.getLayout());
+//        System.out.println("container "   + container.getLayout());
+//        System.out.println("GameBoard "   + gameBoard.getLayout());
+//        System.out.println("infoBoard "   + infoBoard.getLayout());
+//        System.out.println("pnlComponent" + infoBoard.getPnlComponent().getLayout());
 
 //       Kuvab terminali :
 //        JFramejava.awt.BorderLayout[hgap=0,vgap=0]
@@ -39,6 +39,8 @@ public class View extends JFrame {
 //        GameBoard java.awt.FlowLayout[hgap=5,vgap=5,align=center]
 //        infoBoard java.awt.FlowLayout[hgap=5,vgap=5,align=left]
 //        pnlComponentjava.awt.GridBagLayout
+
+        //Mitu asja saab välja kommenteerida ctrl ja klahviatuuril numbriosas /
 
     }
 }
