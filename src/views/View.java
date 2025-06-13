@@ -12,40 +12,48 @@ import java.awt.event.ItemListener;
 
 public class View extends JFrame {
     private Model model;
-    private GameBoard gameBoard; //Mängulaud
-    private InfoBoard infoBoard; //Infopaneel
+    private GameBoard gameBoard; // Mängulaud
+    private InfoBoard infoBoard; // Infotahvel
 
-    public View(Model model)  {
-        super("Laevade pommitamine");
+    public View(Model model) {
+        super("Laevade pommitamine"); // Pealkiri, supper laseb kogu frame sisu kasutada
         this.model = model;
 
-        gameBoard = new GameBoard(model); //Mängulaua loomine
-        infoBoard = new InfoBoard(); //Loome infopaneeli
+        gameBoard = new GameBoard(model); // Loome mängulaua
+        infoBoard = new InfoBoard(); // Loome infotahvli
 
-        JPanel container = new JPanel( new BorderLayout());
+        JPanel container = new JPanel(new BorderLayout()); // Loome uue paneeli
+        container.add(gameBoard, BorderLayout.CENTER); // Paneme paneeli peale mängulaua ujuvale osale
+        container.add(infoBoard, BorderLayout.EAST); // Paneme paneeli peale infotahvli idasse
 
-        container.add(gameBoard, BorderLayout.CENTER); //Mängulaua ujuvale osale
-        container.add(infoBoard, BorderLayout.EAST); //Infotahvel vasakule serva
+        add(container); // Paneme konteineri peale
 
-        add(container);
 
-        //Test Frame ja Panel Layout Managerid
-//        System.out.println("JFrame"       + this.getLayout());
-//        System.out.println("container "   + container.getLayout());
-//        System.out.println("GameBoard "   + gameBoard.getLayout());
-//        System.out.println("infoBoard "   + infoBoard.getLayout());
-//        System.out.println("pnlComponent" + infoBoard.getPnlComponent().getLayout());
+        // Aknal on minimum suurus, millest väiksemaks teh ei saa.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(775,400));
+        this.pack();
+        this.setVisible(true);
 
-//       Kuvab terminali :
-//        JFramejava.awt.BorderLayout[hgap=0,vgap=0]
-//        container java.awt.BorderLayout[hgap=0,vgap=0]
-//        GameBoard java.awt.FlowLayout[hgap=5,vgap=5,align=center]
-//        infoBoard java.awt.FlowLayout[hgap=5,vgap=5,align=left]
-//        pnlComponentjava.awt.GridBagLayout
-
-        //Mitu asja saab välja kommenteerida ctrl ja klahviatuuril numbriosas /
-
+        //TEST Frame ja Panel Layout Managerid
+//        System.out.println("JFrame:        " + this.getLayout());
+//        System.out.println("container:     " + container.getLayout());
+//        System.out.println("GameBoard:     " + gameBoard.getLayout());
+//        System.out.println("InfoBoard:     " + infoBoard.getLayout());
+//        System.out.println("pnlComponents: " + infoBoard.getPnlComponent().getLayout());
     }
+    public void showMainGameView() {
+        getContentPane().removeAll(); // Eemalda kõik varasemad osad
+
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(gameBoard, BorderLayout.CENTER);
+        container.add(infoBoard, BorderLayout.EAST);
+
+        add(container); // Lisa uuesti container
+        revalidate(); // Taasta paigutus
+        repaint();    // Värskenda vaadet
+    }
+
 
 
     public JLabel getLblMouseXY() {
@@ -92,20 +100,33 @@ public class View extends JFrame {
         return infoBoard.getRdoDb();
     }
 
-    public JComboBox getChkWhere() {
-        return infoBoard.getChkWhere();
+    public JCheckBox getChcWhere() {
+        return infoBoard.getChcWhere();
     }
 
     public void registerGameBoardMouse(Controller controller) {
-        gameBoard.addMouseListener(controller);
+        gameBoard.addMouseListener(controller); // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
         gameBoard.addMouseMotionListener(controller);
     }
-
-    public void registerComboBox(ItemListener itemListener) {
-        infoBoard.getCmbSize().addItemListener(itemListener);
+    public void registerComboBox(ItemListener itemListener) { //Registreerib endale selle valiku, mis on tehtud comboboxis
+        infoBoard.getCmbSize().addItemListener(itemListener); //Hiire liikumine
     }
 
     public void registerNewGameButton(ActionListener actionListener) {
-        infoBoard.getBtnNewGame().addActionListener(actionListener);
+        infoBoard.getBtnNewGame().addActionListener(actionListener); // Nupu klikimise funktsionaalsus
     }
+
+    public void registerScoreBoardButton(ActionListener actionListener) {
+        infoBoard.getBtnScoreBoard().addActionListener(actionListener);
+    }
+
+    public GameBoard getGameBoard() { // Getter vajalik, et saaks ligipääsu GameBoardile
+        return gameBoard;
+    }
+
+    public InfoBoard getInfoBoard() {
+        return infoBoard;
+    }
+
+
 }

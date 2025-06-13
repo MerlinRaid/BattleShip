@@ -5,9 +5,9 @@ import java.time.Instant;
 
 /**
  * Lihtne mängu ajamõõtja, mis võimaldab:
- * -aja kävitamist
+ * -aja käivitamist
  * -peatamist
- * -nullist uuesti alustamist
+ * nullist uuesti alustamist
  * Aega mõõdetakse süsteemi kella alusel
  */
 public class GameTimer {
@@ -15,47 +15,54 @@ public class GameTimer {
     private boolean running;
     private Duration duration = Duration.ZERO;
 
-    //Käivita taimer nullits, kui juba töötas, siis alustab uuesti algusest
+
+    /**
+     * Käivitab taimeri nullist. Kui juba töötas, siis alustab uuesti algusest
+     */
     public void start() {
-        startTime = Instant.now(); //Alusta aja mõõtmist praegusest hetkest
+        startTime = Instant.now(); // Alustame aja mõõtmist praegusest ajahetkest
         running = true;
         duration = Duration.ZERO; //Taaskäivitus nullist
     }
 
-    //Peatb timeri, aeg peatub
+    /**
+     * Peatab taimeri, aeg peatub
+     */
     public void stop() {
-        if (running && startTime != null) {
+        if(running && startTime != null) { // Aega saab mõõta aint siis kui aeg jookseb ja starttime ei ole 0
             duration = Duration.between(startTime, Instant.now());
         }
         running = false;
     }
 
+
+    //Getter
+
     /**
      * Kas taimer töötab
-     * @return true jah, false ei
+     * @return true jah töötab, false ei tööta
      */
     public boolean isRunning() {
         return running;
     }
 
     /**
-     * Tagstab, kui palju aega on mängu algusest möödas
-     * @return aeg sekundites või 0
+     * Tagastab, kui palju aega on mängu algusest möödunud sekundites
+     * @return sekundid või 0
      */
     public int getElapsedSeconds() {
         if(startTime == null) {
             return 0;
         }
-
         if(running) {
             return (int) Duration.between(startTime, Instant.now()).getSeconds();
-        } else {
+        }else {
             return (int) duration.getSeconds();
         }
     }
 
     /**
-     * Vormindab aja sekunditest kujule MM:SS ehk 25 sek = 00:20
+     * Vormindab aja sekunditest kujule MM:SS ehk 25 sek = 00:25
      * @return vormindatud aeg
      */
     public String formatGameTime() {

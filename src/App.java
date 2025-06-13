@@ -3,6 +3,7 @@ import models.Model;
 import views.View;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class App {
     public static void main(String[] args) {
@@ -12,13 +13,17 @@ public class App {
                 View view = new View(model);
                 Controller controller = new Controller(model, view);
 
-                //Hiire liikumise aktiveerimiseks
+                //Hiire liikumise aktiviseerimiseks
                 view.registerGameBoardMouse(controller);
 
-                view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Sellega paneme frame tööle (frame on view-s tehtud)
                 view.pack();
-                view.setLocationRelativeTo(null); //Ekraani keskele
-                view.setVisible(true); //Tee JFrame nähtavaks
+                view.setLocationRelativeTo(null); // Paneb ekraani keskele
+                view.setVisible(true); // Tee Jframe nähtavaks
+
+
+
+
             }
         });
     }

@@ -1,10 +1,10 @@
 package models;
 
 public class Area {
-    int startRow; //Ala ülemise rea indeks
-    int endRow; //Ala alumise rea indeks
+    int startRow; // Ala ülemise rea index
+    int endRow; // Ala alumise rea indeks
     int startCol; // Ala vasakpoolse veeru indeks
-    int endCol; //Ala parempoolse veeru indeks
+    int endCol; // Ala parempoolse veeru indeks
 
     public Area(int startRow, int endRow, int startCol, int endCol) {
         this.startRow = startRow;
@@ -12,4 +12,5 @@ public class Area {
         this.startCol = startCol;
         this.endCol = endCol;
     }
+
 }

@@ -1,54 +1,55 @@
 package views.panels;
 
-import models.GridData;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class InfoBoard extends JPanel {
+public class InfoBoard  extends JPanel {
 
     private JPanel pnlComponent = new JPanel(new GridBagLayout());
     private GridBagConstraints gbc = new GridBagConstraints();
 
-    //Kaks kirjastiili
+
+    // Kaks kirjastiili
     private Font fontBold = new Font("Verdana", Font.BOLD, 14);
     private Font fontNormal = new Font("Verdana", Font.PLAIN, 14);
 
-    //Võimalikud mängulau suurused
-    private String[] boardSizes = {"10", "11", "12", "13", "14", "15"};
+    // Võimalikud laua suurused
+    private String[] boardSizes = {"10", "11", "12", "13", "14", "15"}; // Mängulaua suuruse valikud listis (10-15)
 
-    //Defineerime sildi (label) muutujad
-    private JLabel lblMouseXY;
-    private JLabel lblID;
-    private JLabel lblRowCol;
-    private JLabel lblTime;
-    private JLabel lblShip;
-    private JLabel lblGameBoard;
+    // Defineerime sildid (labelid), need mis muutuvad ehk parempoolsed
+    private JLabel lblMouseXY; // näitab hiire koordinaate
+    private JLabel lblID; // näitab kasti numbrit
+    private JLabel lblRowCol; // näitab ridaxveerg
+    private JLabel lblTime; // näitab mänguaega
+    private JLabel lblShip; // näitab mitu laeva mitmest
+    private JLabel lblGameBoard; // Näitab mängulaua suurust
 
-    private JComboBox<String> cmbSize;
+    // Rippmenüü
+    private JComboBox<String> cmbSize; // rippmenüü, kust saab valida mängulaua suurust
 
-    private JButton btnNewGame;
-    private JButton btnScoreBoard;
+    //Nupud
+    private JButton btnNewGame; // nupp uus mäng
+    private JButton btnScoreBoard; // nupp edetabel
 
-    //TODO Edetabeliga seotud asjad
-    private JRadioButton rdoFile; //Info loetakse failist
-    private JRadioButton rdoDb; //Info loetakse andemaasist
+    //TODO edetabeliga seotud asjad
+    private JRadioButton rdoFile; // Radionupp - info looetakse failist
+    private JRadioButton rdoDb; // Info loetakse andmebaasist
     private ButtonGroup btnGroup = new ButtonGroup(); // Mõlemad rdo nupud on siin
-    private JComboBox chkWhere; //Eraldi aknas linnuke
+    private JCheckBox chcWhere; // Eraldi aknas "linnuke"
+
 
     public InfoBoard() {
-        //setLayout(new FlowLayout(FlowLayout.LEFT)); //Algne layout
-        setLayout(new BorderLayout()); //Uus layout
+        // setLayout(new FlowLayout(FlowLayout.LEFT)); // Algne layout
+        setLayout(new BorderLayout()); // Uus layout, selleks et venitaks selle kollase paneeli suuremaks
         setPreferredSize(new Dimension(400, 188));
-        setBackground(new Color(0, 255, 190));
+        setBackground(new Color(164, 241, 248));
 
-        //Sellele paneelile lähevad kõik komponendid
-        pnlComponent.setBackground(new Color(230, 230, 170));
+        pnlComponent.setBackground(new Color(244, 243, 165)); // Sellele paneelile lähevad kõik labelid (hiire liikumine, laua suurus, nupud jne)
 
+        gbc.anchor = GridBagConstraints.WEST; // Määrame kuhu need labelid tulevad - vasakule
+        gbc.insets = new Insets(2, 2, 2, 2); // Määrad palju jätad ruumi ümber labelite
 
-        gbc.anchor = GridBagConstraints.WEST; //see võib = ka 17 ehk sama mis WEST ehk joon damine vasakule(lahtrisse)
-        gbc.insets = new Insets(2, 2, 2, 2); //Ümber teksti 2px tühjust
-
+        //Hakkame rea kaupa neid labelid seadistama
         setupLine1();
         setupLine2();
         setupLine3();
@@ -59,107 +60,115 @@ public class InfoBoard extends JPanel {
         setupButtons();
         setupRadioButtons();
 
-
         //Tühja osa täitmine, mis on veniv
         gbc.gridx = 0;
-        gbc.gridy = 12;
-        gbc.gridwidth = 2; //Kasutusel on kaks veergu
+        gbc.gridy = 12; // Peab olema 1 rida rohkem kui sul tegelt ridu on, siis ei tee koledaks vaadet suureks tehes.
+        gbc.gridwidth = 2; // Kasutusel kaks veergu
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         JPanel flowPanel = new JPanel();
-        flowPanel.setOpaque(false); //Nähtamatu ainult venitab
+        flowPanel.setOpaque(false); // Nähtamatu, ainult venib
         pnlComponent.add(flowPanel, gbc);
 
 
-        add(pnlComponent, BorderLayout.CENTER);
+        add(pnlComponent, BorderLayout.CENTER); // Lisame selle kollase paneeli frame paneelile
 
 
     }
-
-
 
     private void setupLine1() {
-        //Esimese reag esimene veerg (rasvane lahter)
+        // Esimese rea esimene veerg (Hiir)
         JLabel label = new JLabel("Hiir");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 0; //Rida
+        gbc.gridx = 0; // Veerg
+        gbc.gridy = 0; // Rida
         pnlComponent.add(label, gbc);
 
-        //Esimese rea teine veerg (tavaline label)
+        //Esimese rea teine veerg (hiire koordinaadid)
         lblMouseXY = new JLabel("x = 0 & y = 0");
         lblMouseXY.setFont(fontNormal);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridx = 1; // rida = 1
+        gbc.gridy = 0; // rida = 0
         pnlComponent.add(lblMouseXY, gbc);
-
-
     }
 
+    // Rida 2
     private void setupLine2() {
+        // Teise rea esimene veerg
         JLabel label = new JLabel("Lahtri ID");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 1; //Lahter
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         pnlComponent.add(label, gbc);
 
-        lblID = new JLabel("Teadmata");
+        // Teise rea teine veerg
+        lblID = new JLabel("47");
         lblID.setFont(fontNormal);
         gbc.gridx = 1;
         gbc.gridy = 1;
         pnlComponent.add(lblID, gbc);
+
     }
 
+    // Rida 3
     private void setupLine3() {
+        // Kolmanda rea esimene veerg ( rida/ veerg)
         JLabel label = new JLabel("Rida : Veerg");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 2; //Rida
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         pnlComponent.add(label, gbc);
-
-        lblRowCol = new JLabel("0 : 0");
+        // Kolmanda rea teine veerg
+        lblRowCol = new JLabel("5 : 7");
         lblRowCol.setFont(fontNormal);
         gbc.gridx = 1;
         gbc.gridy = 2;
         pnlComponent.add(lblRowCol, gbc);
     }
 
+    // Rida 4
     private void setupLine4() {
+        // Neljanda rea esimene veerg (aeg)
         JLabel label = new JLabel("Mängu aeg");
         label.setFont(fontBold);
         gbc.gridx = 0;
         gbc.gridy = 3;
         pnlComponent.add(label, gbc);
 
+        // Neljanda rea teine veerg
         lblTime = new JLabel("00:00");
         lblTime.setFont(fontNormal);
         gbc.gridx = 1;
         gbc.gridy = 3;
         pnlComponent.add(lblTime, gbc);
     }
-
+    // Viies rida
     private void setupLine5() {
+        // Viienda rea esimene veerg ( Laevade hulk)
         JLabel label = new JLabel("Laevad");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 4; //Rida
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         pnlComponent.add(label, gbc);
 
-        lblShip = new JLabel("0 / 0");
+        // Viienda rea teine veerg
+        lblShip = new JLabel("10 / 10");
         lblShip.setFont(fontNormal);
         gbc.gridx = 1;
         gbc.gridy = 4;
         pnlComponent.add(lblShip, gbc);
-    }
 
+    }
     private void setupLine6() {
+        // Kuuenda rea esimene veerg ( mängulaua suurus)
         JLabel label = new JLabel("Laua suurus");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 5; //Rida
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         pnlComponent.add(label, gbc);
 
+        // Kuuenda rea teine veerg
         lblGameBoard = new JLabel("10 x 10");
         lblGameBoard.setFont(fontNormal);
         gbc.gridx = 1;
@@ -167,45 +176,46 @@ public class InfoBoard extends JPanel {
         pnlComponent.add(lblGameBoard, gbc);
     }
 
+    // Komboboxiga rea tegemine
     private void setupComboBox() {
-        JLabel label = new JLabel("Vali laua suurus");
+        JLabel label = new JLabel ("Vali laua suurus");
         label.setFont(fontBold);
-        gbc.gridx = 0; //Veerg
-        gbc.gridy = 6; //Rida
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         pnlComponent.add(label, gbc);
 
+        // Rippmenüü loomine
         cmbSize = new JComboBox<>(boardSizes);
         cmbSize.setFont(fontNormal);
         cmbSize.setPreferredSize(new Dimension(106, 28));
         gbc.gridx = 1;
         gbc.gridy = 6;
         pnlComponent.add(cmbSize, gbc);
-
     }
 
+    // Nuppude tegemine
     private void setupButtons() {
         JLabel label = new JLabel("Nupud");
         label.setFont(fontBold);
 
-
         gbc.gridx = 0;
         gbc.gridy = 7;
-        gbc.gridheight = 2; //Ühendab kaks rida üheks
-        gbc.gridwidth = 1; //Üks veerg
-        gbc.anchor = GridBagConstraints.WEST; //Paigutab keskele
-        gbc.fill = GridBagConstraints.NONE; //Ei venita labelit
+        gbc.gridheight = 2; // Ühendab kaks rida üheks
+        gbc.gridwidth = 1; // Üks veerg jääb
+        gbc.anchor = GridBagConstraints.WEST; // Paigutab keskele
+        gbc.fill = GridBagConstraints.NONE; // Ei venita labelit
         pnlComponent.add(label, gbc);
 
-        //Nupp uus mäng
+        // Nupp uus mäng
         btnNewGame = new JButton("Uus mäng");
         btnNewGame.setFont(fontNormal);
         btnNewGame.setPreferredSize(new Dimension(106, 28));
         gbc.gridx = 1;
         gbc.gridy = 7;
-        gbc.gridheight = 1;
+        gbc.gridheight = 1; // Tuleb see kõrgus öelda, sest seal nuppudes muutsime kõrguse ära üle kahe rea
         pnlComponent.add(btnNewGame, gbc);
 
-        //Nupp edetabel
+        // Nupp Edetabel
         btnScoreBoard = new JButton("Edetabel");
         btnScoreBoard.setFont(fontNormal);
         btnScoreBoard.setPreferredSize(new Dimension(106, 28));
@@ -214,40 +224,50 @@ public class InfoBoard extends JPanel {
         pnlComponent.add(btnScoreBoard, gbc);
 
     }
-
     private void setupRadioButtons() {
         JLabel label = new JLabel("Edetabeli sisu");
         label.setFont(fontBold);
+        label.setPreferredSize(new Dimension(150, 28));
         gbc.gridx = 0;
-        gbc.gridy = 10;
+        gbc.gridy = 9;
         pnlComponent.add(label, gbc);
 
         rdoFile = new JRadioButton("Fail");
         rdoFile.setFont(fontNormal);
-        rdoFile.setBackground(new Color(230, 230, 170));
+        rdoFile.setBackground(new Color(244, 243, 165, 237));
+        rdoFile.setPreferredSize(new Dimension(106, 28));
+        rdoFile.setSelected(true);
         gbc.gridx = 1;
         gbc.gridy = 9;
         pnlComponent.add(rdoFile, gbc);
 
+
         rdoDb = new JRadioButton("Andmebaas");
         rdoDb.setFont(fontNormal);
-        rdoDb.setBackground(new Color(230, 230, 170));
+        rdoDb.setBackground(new Color(244, 243, 165, 237));
+        rdoDb.setPreferredSize(new Dimension(120, 28));
         gbc.gridx = 1;
         gbc.gridy = 10;
         pnlComponent.add(rdoDb, gbc);
 
-        btnGroup.add(rdoFile);
         btnGroup.add(rdoDb);
-        rdoFile.setSelected(true);
+        btnGroup.add(rdoFile);
 
-        JCheckBox chkSeparateWindow = new JCheckBox("Eraldi aknas");
-        chkSeparateWindow.setFont(fontNormal);
-        chkSeparateWindow.setBackground(new Color(230, 230, 170));
-        chkSeparateWindow.setSelected(true);
+        chcWhere = new JCheckBox("Eraldi aknas");
+        chcWhere.setFont(fontNormal);
+        chcWhere.setBackground(new Color(244, 243, 165, 237));
+        chcWhere.setPreferredSize(new Dimension(120, 28));
+        chcWhere.setSelected(true);
         gbc.gridx = 1;
         gbc.gridy = 11;
-        pnlComponent.add(chkSeparateWindow, gbc);
+        pnlComponent.add(chcWhere, gbc);
+
+
+
     }
+
+
+    //GETTERS
 
 
     public JPanel getPnlComponent() {
@@ -298,7 +318,7 @@ public class InfoBoard extends JPanel {
         return rdoDb;
     }
 
-    public JComboBox getChkWhere() {
-        return chkWhere;
+    public JCheckBox getChcWhere() {
+        return chcWhere;
     }
-} // LÕPP
+}

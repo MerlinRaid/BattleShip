@@ -3,20 +3,22 @@ package models;
 public class GridData {
     private int row;
     private int col;
-    private int x;
-    private int y;
+    private int x; //Ülemine nurk
+    private int y; // alumine nurk
     private int width;
     private int height;
 
-
-    public GridData(int row, int col, int x, int y, int width, int height) {
+    public GridData(int row, int col, int x, int y, int width, int height) { //Konstruktor
         this.row = row;
         this.col = col;
         this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
-        this.y = y;
     }
+
+
+    // GETTERS
 
     public int getRow() {
         return row;
@@ -42,4 +44,3 @@ public class GridData {
         return height;
     }
 }
-
