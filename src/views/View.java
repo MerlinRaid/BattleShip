@@ -29,10 +29,11 @@ public class View extends JFrame {
         add(container); // Paneme konteineri peale
 
 
-        // Aknal on minimum suurus, millest väiksemaks teh ei saa.
+        /// Aknal on miinimumsuurus, millest väiksemaks seda vähendada ei saa.
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(775,400));
         this.pack();
+        this.setMinimumSize(this.getSize());
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         //TEST Frame ja Panel Layout Managerid
